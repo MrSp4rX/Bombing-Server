@@ -26,7 +26,7 @@ def bomb(mobile_number, messages):
             Creator = "MrSp4rX"
         )
 
-    if len(str(mobile_number)) == 10 and int(messages) <= 500 and str(mobile_number) not in protected and str(mobile_number) not in admins:
+    if len(str(mobile_number)) == 10 and int(messages) <= 250 and str(mobile_number) not in protected and str(mobile_number) not in admins:
         bombing = multiprocessing.Process(target=infinite, args=[mobile_number, messages])
         bombing.start()
         return jsonify(
