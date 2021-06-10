@@ -1,49 +1,82 @@
-from logging import error
-from flask import Flask, render_template, redirect, request, json
+from flask import Flask, render_template, redirect, request, jsonify
+from api import infinite
+import multiprocessing
 
 app = Flask(__name__)
 
 protected = []
-admins = ['9519874704']
+admins = []
 
 @app.route('/')
 def index():
     return '<h1>Index Page</h1>'
-    # return render_template('index.html')
 
-@app.route('/bomb')
-def bomb():
-    mobile_number, messages = request.args.get('mobile_number'), request.args.get('messages')
+@app.route('/bomb/<string:mobile_number>/<int:messages>')
+def bomb(mobile_number, messages):
+    try:
+        mobile_number = int(mobile_number)
+        messages = int(messages)
+    except:
+        return jsonify(
+            Response = "Please Provide Correct Parameters.",
+            Mobile_Number = mobile_number,
+            Messages = messages
+        )
 
-    if mobile_number == None or messages == None:
-        res = "Please Provide all Parameters."
+    if len(str(mobile_number)) == 10 and int(messages) <= 500 and str(mobile_number) not in protected and str(mobile_number) not in admins:
+        bombing = multiprocessing.Process(target=infinite, args=[mobile_number, messages])
+        bombing.start()
+        return jsonify(
+            Response = "Bombing is Being Started",
+            Mobile_Number = mobile_number,
+            Messages = messages
+        )
     
-    else:
-        if int(messages) >= 500:
-            res = "You cannot Bomb more than 500 messages at a Time."
-        
-        elif str(mobile_number) in protected:
-            res = "You can't Bomb on Protected Numbers."
+    return jsonify(
+        Response = "Something went Wrong",
+        Mobile_Number = mobile_number,
+        Messages = messages,
+        Tool = "iSpammer",
+        Creator = "MrSp4rX"
+    )
 
-        elif str(mobile_number) in admins:
-            res = "You can't Bomb on Admin's Number."
+@app.route('/bombint/<int:cc>/<string:mobile_number>/<int:messages>')
+def bombint(cc, mobile_number, messages):
+    try:
+        cc = int(cc)
+        mobile_number = int(mobile_number)
+        messages = int(messages)
+    except:
+        return jsonify(
+            Response = "Please Provide Correct Parameters.",
+            Country_Code = cc,
+            Mobile_Number = mobile_number,
+            Messages = messages
+        )
 
-        elif len(str(mobile_number)) > 10 or len(str(mobile_number)) < 10:
-            res = "Please Enter Mobile Number Correctly"
+    if int(messages) <= 100 and str(cc)+str(mobile_number) not in protected and str(cc)+str(mobile_number) not in admins and len(str(cc)) <= 3:
+        return jsonify(
+            Response = "Bombing is Being Started",
+            Country_Code = cc,
+            Mobile_Number = mobile_number,
+            Messages = messages
+        )
+    
+    return jsonify(
+        Response = "Something went Wrong",
+        Country_Code = cc,
+        Mobile_Number = mobile_number,
+        Messages = messages,
+        Tool = "TBomb",
+        Creator = "TheSpeedX"
+    )
 
-        elif len(str(mobile_number)) == 10:
-            try:
-                int(str(mobile_number))
-            
-            except:
-                res = "Please Enter Mobile Number not ABCD."
-
-        else:
-            res = "Bombing is Being Started."
-
-    data = {"mobile_number" : mobile_number, "messages" : messages, "Response" : res}
-    response = app.response_class(response=json.dumps(data), mimetype='application/json')
-    return response
+@app.errorhandler(404)
+def errorhandler(e):
+    print(e)
+    return jsonify(
+        Response = str(e)
+    )
 
 if __name__=="__main__":
     app.run(port=80, debug=True)
