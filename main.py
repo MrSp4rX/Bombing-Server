@@ -6,7 +6,7 @@ import multiprocessing
 app = Flask(__name__)
 
 protected = []
-admins = ['9519874704']
+admins = []
 
 @app.route('/')
 def index():
@@ -21,7 +21,9 @@ def bomb(mobile_number, messages):
         return jsonify(
             Response = "Please Provide Correct Parameters.",
             Mobile_Number = mobile_number,
-            Messages = messages
+            Messages = messages,
+            Tool = "iSpammer",
+            Creator = "MrSp4rX"
         )
 
     if len(str(mobile_number)) == 10 and int(messages) <= 500 and str(mobile_number) not in protected and str(mobile_number) not in admins:
@@ -30,7 +32,9 @@ def bomb(mobile_number, messages):
         return jsonify(
             Response = "Bombing is Being Started",
             Mobile_Number = mobile_number,
-            Messages = messages
+            Messages = messages,
+            Tool = "iSpammer",
+            Creator = "MrSp4rX"
         )
     
     return jsonify(
@@ -57,7 +61,9 @@ def bombint(cc, mobile_number, messages):
             Response = "Please Provide Correct Parameters.",
             Country_Code = cc,
             Mobile_Number = mobile_number,
-            Messages = messages
+            Messages = messages,
+            Tool = "TBomb",
+            Creator = "TheSpeedX"
         )
 
     if int(messages) <= 100 and str(cc)+str(mobile_number) not in protected and str(cc)+str(mobile_number) not in admins and len(str(cc)) <= 3:
@@ -67,7 +73,9 @@ def bombint(cc, mobile_number, messages):
             Response = "Bombing is Being Started",
             Country_Code = cc,
             Mobile_Number = mobile_number,
-            Messages = messages
+            Messages = messages,
+            Tool = "TBomb",
+            Creator = "TheSpeedX"
         )
     
     return jsonify(
