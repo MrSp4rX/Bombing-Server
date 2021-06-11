@@ -3,10 +3,13 @@ from api import infinite
 from tbomb.utils import provider
 import multiprocessing
 
+
+
 app = Flask(__name__)
 
 protected = []
-admins = ['9519874704']
+admins = ['9519874704', '7205595198']
+
 
 @app.route('/')
 def index():
@@ -26,7 +29,8 @@ def bomb(mobile_number, messages):
             Creator = "MrSp4rX"
         )
 
-    if len(str(mobile_number)) == 10 and int(messages) <= 250 and str(mobile_number) not in protected and str(mobile_number) not in admins:
+
+    if len(str(mobile_number)) == 10 and int(messages) <= 500 and str(mobile_number) not in protected and str(mobile_number) not in admins:
         bombing = multiprocessing.Process(target=infinite, args=[mobile_number, messages])
         bombing.start()
         return jsonify(
@@ -66,7 +70,7 @@ def bombint(cc, mobile_number, messages):
             Creator = "TheSpeedX"
         )
 
-    if int(messages) <= 100 and str(cc)+str(mobile_number) not in protected and str(cc)+str(mobile_number) not in admins and len(str(cc)) <= 3:
+    if int(messages) <= 100 and str(cc)+str(mobile_number) not in protected and str(cc)+str(mobile_number) not in admins and len(str(cc)) <= 3 and str(cc)!="1" and str(cc)!="91":
         bombing = multiprocessing.Process(target=bombing_loop, args=[cc, mobile_number, 'sms', messages])
         bombing.start()
         return jsonify(
@@ -95,4 +99,4 @@ def errorhandler(e):
     )
 
 if __name__=="__main__":
-    app.run(port=80, debug=True)
+    app.run(debug=True)
