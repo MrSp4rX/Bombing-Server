@@ -2,13 +2,10 @@ from flask import Flask, render_template, redirect, request, jsonify
 from api import infinite
 from tbomb.utils import provider
 import multiprocessing
-
+from requests import get
 
 
 app = Flask(__name__)
-
-protected = []
-admins = ['9519874704', '7205595198']
 
 
 @app.route('/')
@@ -17,6 +14,10 @@ def index():
 
 @app.route('/bomb/<string:mobile_number>/<int:messages>')
 def bomb(mobile_number, messages):
+    protected_data = get('https://raw.githubusercontent.com/MrSp4rX/iSpammerApp/main/Protect.list')
+    print(protected_data.json())
+    protected = list(protected_data['protected'])
+    admin = list(protected_data['admin'])
     try:
         mobile_number = int(mobile_number)
         messages = int(messages)
@@ -30,9 +31,9 @@ def bomb(mobile_number, messages):
         )
 
 
-    if len(str(mobile_number)) == 10 and int(messages) <= 500 and str(mobile_number) not in protected and str(mobile_number) not in admins:
-        bombing = multiprocessing.Process(target=infinite, args=[mobile_number, messages])
-        bombing.start()
+    if len(str(mobile_number)) == 10 and int(messages) <= 250 and str(mobile_number) not in protected and str(mobile_number) not in admin:
+        # bombing = multiprocessing.Process(target=infinite, args=[mobile_number, messages])
+        # bombing.start()
         return jsonify(
             Response = "Bombing is Being Started",
             Mobile_Number = mobile_number,
