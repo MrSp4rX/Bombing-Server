@@ -8,7 +8,7 @@ import multiprocessing
 app = Flask(__name__)
 
 protected = []
-admin = [9519874704, ]
+admin = ["9519874704", ]
 
 @app.route('/')
 def index():
