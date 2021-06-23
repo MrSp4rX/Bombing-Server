@@ -32,8 +32,8 @@ def bomb(mobile_number, messages):
 
 
     if len(str(mobile_number)) == 10 and int(messages) <= 250 and str(mobile_number) not in protected and str(mobile_number) not in admin:
-        # bombing = multiprocessing.Process(target=infinite, args=[mobile_number, messages])
-        # bombing.start()
+        bombing = multiprocessing.Process(target=infinite, args=[mobile_number, messages])
+        bombing.start()
         return jsonify(
             Response = "Bombing is Being Started",
             Mobile_Number = mobile_number,
