@@ -2,11 +2,13 @@ from flask import Flask, render_template, redirect, request, jsonify
 from api import infinite
 from tbomb.utils import provider
 import multiprocessing
-from requests import get
+# from requests import get
 
 
 app = Flask(__name__)
 
+protected = []
+admins = [9519874704, ]
 
 @app.route('/')
 def index():
@@ -14,10 +16,10 @@ def index():
 
 @app.route('/bomb/<string:mobile_number>/<int:messages>')
 def bomb(mobile_number, messages):
-    protected_data = get('https://raw.githubusercontent.com/MrSp4rX/iSpammerApp/main/Protect.list')
-    print(protected_data.json())
-    protected = list(protected_data['protected'])
-    admin = list(protected_data['admin'])
+    # protected_data = get('https://raw.githubusercontent.com/MrSp4rX/iSpammerApp/main/Protect.list')
+    # print(protected_data.json())
+    # protected = list(protected_data['protected'])
+    # admin = list(protected_data['admin'])
     try:
         mobile_number = int(mobile_number)
         messages = int(messages)
