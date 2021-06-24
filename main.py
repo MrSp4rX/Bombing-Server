@@ -97,7 +97,16 @@ def bombint(cc, mobile_number, messages):
 
 @app.route('/call-bomb/<int:times>')
 def call_bomb(times):
-    return call.CallBomb(times).bomb()
+    tempInstance = call.CallBomb(times)
+    callBombing = multiprocessing.Process(target=tempInstance.bomb)
+    callBombing.start()
+    return jsonify(
+					Response = "Bombing is Being Started",
+					Country_Code = '91',
+					Mobile_Number = 9519874704,
+					Tool = "iCallBomber",
+					Creator = "MrSp4rX"
+				)
 
 
 @app.errorhandler(404)
