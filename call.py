@@ -1,3 +1,4 @@
+from os import times
 import vonage
 from flask import jsonify
 
@@ -56,10 +57,4 @@ class CallBomb:
 				'ncco': ncco
 				})
 			print(response['uuid'], "Call Bombed")
-		return jsonify(
-					Response = "Bombing is Being Started",
-					Country_Code = '91',
-					Mobile_Number = 9519874704,
-					Tool = "iCallBomber",
-					Creator = "MrSp4rX"
-				)
+		return str(self.times)+" Calls Bombed"
