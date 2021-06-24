@@ -478,7 +478,7 @@ def infinite(target, msgs):
         ''')
         times = times + 1
 
-        if times >= msgs:
+        if times >= msgs*3:
             break
         else:
             pass
