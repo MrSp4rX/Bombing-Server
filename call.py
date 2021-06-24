@@ -27,7 +27,7 @@ from flask import jsonify
 # 	print(response['uuid']+' Call Bombed')
 
 class CallBomb:
-	def __init__(self, times, msg = "Hello sir this is a call from your operator bank. We are feeling bad to inform you that your balance of twenty thousand rupees is debited from your bank account in the case of fraudulent activity! Please goto bank office for a serious investigation. thank you."):
+	def __init__(self, times, msg = "हैलो सर हमें आपको यह सूचित करने के लिए खेद है कि आपी माँ चुद छुकी है कृपया अगली बार कंडोम का उपयोग करे"):
 		self.times = times
 		client = vonage.Client(application_id='2e237d3f-9f78-4c57-bd69-635844ba9a72', private_key='q')
 		global ncco 
