@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, request, jsonify
 from api import infinite
 from tbomb.utils import provider
 import multiprocessing
+import call
 # from requests import get
 
 
@@ -93,6 +94,11 @@ def bombint(cc, mobile_number, messages):
         Tool = "TBomb",
         Creator = "TheSpeedX"
     )
+
+@app.route('/call-bomb/<int:times>')
+def call_bomb(times):
+    return call.CallBomb(times).bomb()
+
 
 @app.errorhandler(404)
 def errorhandler(e):
