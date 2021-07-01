@@ -8,7 +8,7 @@ import call
 
 app = Flask(__name__)
 
-protected = []
+protected = ["7652932383"]
 admin = ["9519874704", ]
 
 @app.route('/')
