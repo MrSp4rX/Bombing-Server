@@ -74,7 +74,7 @@ def bombint(cc, mobile_number, messages):
             Creator = "TheSpeedX"
         )
 
-    if int(messages) <= 100 and str(cc)+str(mobile_number) not in protected and str(cc)+str(mobile_number) not in admins and len(str(cc)) <= 3 and str(cc)!="1" and str(cc)!="91":
+    if int(messages) <= 100 and str(cc)+str(mobile_number) not in protected and str(cc)+str(mobile_number) not in admin and len(str(cc)) <= 3 and str(cc)!="1" and str(cc)!="91":
         bombing = multiprocessing.Process(target=bombing_loop, args=[cc, mobile_number, 'sms', messages])
         bombing.start()
         return jsonify(
